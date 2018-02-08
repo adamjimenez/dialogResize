@@ -13,15 +13,12 @@
 	$.widget("ui.dialogResize", $.ui.dialog, {
 		_create: function() {
 			this._super();
-			
-			this.origWidth = this.option("width");
-			this.origHeight = this.option("height");
-			this.origPosition = this.option("position");
-			
 			$(window).on("resize orientationchange", $.proxy(this._resize, this));
-			$(window).trigger("resize");
 		},
 		_resize: function(e) {
+			if (!this.isOpen())
+				return;
+			
 			// resize dialog on window resize
 			if (e.target == window) {
 				// reduce size if bigger than window
@@ -44,9 +41,14 @@
 		},
 		_destroy: function() {
 			this._super();
-			
 			$(window).off("resize orientationchange", $.proxy(this._resize, this));
+		},
+		open: function() {
+			this._super();
+			this.origPosition = this.option("position");
+			this.origWidth = this.element.parent().outerWidth();
+			this.origHeight = this.element.parent().outerHeight();
+			$(window).trigger("resize");
 		}
 	});
-
 })(jQuery);
