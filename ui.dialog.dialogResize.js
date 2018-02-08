@@ -22,8 +22,8 @@
 			// resize dialog on window resize
 			if (e.target == window) {
 				// reduce size if bigger than window
-				var w = Math.min(this.origWidth, $( window ).width());
-				var h = Math.min(this.origHeight, $( window ).height());
+				var w = Math.min(this.origWidth, $( window ).width()-10);
+				var h = Math.min(this.origHeight, $( window ).height()-10);
 				
 				// set size and reposition
 				this.option("width", w);
